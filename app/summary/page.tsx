@@ -25,7 +25,16 @@ export default function SummaryPage() {
     rights: false,
     concerns: false,
   })
-  const [analysis, setAnalysis] = useState<any | null>(null)
+  const [analysis, setAnalysis] = useState<{
+    summary?: {
+      rent?: string;
+      deposit?: string;
+      term?: string;
+      keyClauses?: string[];
+      redFlags?: string[];
+      recommendations?: string[];
+    };
+  } | null>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -76,7 +85,7 @@ export default function SummaryPage() {
                 </Badge>
               </div>
               <p className="text-lg text-gray-600">
-                Here's what we found in your lease agreement. Upgrade to see the complete analysis with detailed
+                Here&apos;s what we found in your lease agreement. Upgrade to see the complete analysis with detailed
                 explanations.
               </p>
             </div>
@@ -265,7 +274,7 @@ export default function SummaryPage() {
                               <div>
                                 <h4 className="font-medium text-gray-900">Security Deposit Return</h4>
                                 <p className="text-sm text-gray-600">
-                                  You're entitled to your full deposit back if there's no damage beyond normal wear and
+                                  You&apos;re entitled to your full deposit back if there&apos;s no damage beyond normal wear and
                                   tear.
                                 </p>
                               </div>

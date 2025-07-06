@@ -50,7 +50,7 @@ export default function DebugPage() {
     cacheHitRate: 0,
   })
 
-  const [debugInfo, setDebugInfo] = useState<DebugInfo>({
+  const [debugInfo] = useState<DebugInfo>({
     environment: process.env.NODE_ENV || "development",
     version: "1.0.0",
     buildTime: new Date().toISOString(),
@@ -75,7 +75,7 @@ export default function DebugPage() {
             ...prev,
             apiResponseTime: apiTime,
             pageLoadTime: performance.timing?.loadEventEnd - performance.timing?.navigationStart || 0,
-            memoryUsage: (performance as any).memory?.usedJSHeapSize / 1024 / 1024 || 0,
+            memoryUsage: ((performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize || 0) / 1024 / 1024,
             renderTime: performance.now() - startTime,
             cacheHitRate: Math.random() * 100,
             errorCount: Math.floor(Math.random() * 5),
@@ -139,7 +139,7 @@ export default function DebugPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Bug className="w-6 h-6 text-purple-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Debug & Performance</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Debug &amp; Performance</h1>
             </div>
             <div className="flex items-center space-x-2">
               <Badge
@@ -371,8 +371,8 @@ export default function DebugPage() {
                     <div>
                       <span className="text-gray-600">Connection:</span>
                       <p className="font-mono text-xs mt-1">
-                        {typeof navigator !== "undefined" && (navigator as any).connection
-                          ? (navigator as any).connection.effectiveType
+                        {typeof navigator !== "undefined" && (navigator as Navigator & { connection?: { effectiveType: string } }).connection
+                          ? (navigator as Navigator & { connection?: { effectiveType: string } }).connection?.effectiveType || "Unknown"
                           : "Unknown"}
                       </p>
                     </div>
@@ -386,7 +386,7 @@ export default function DebugPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Performance Optimization</CardTitle>
-                  <p className="text-gray-600">Run automated optimizations to improve your app's performance.</p>
+                  <p className="text-gray-600">Run automated optimizations to improve your app&apos;s performance.</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Button

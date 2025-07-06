@@ -209,18 +209,6 @@ export default function MessagingPage() {
     }
   }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "text-red-600"
-      case "medium":
-        return "text-yellow-600"
-      case "low":
-        return "text-green-600"
-      default:
-        return "text-gray-600"
-    }
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">

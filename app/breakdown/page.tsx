@@ -14,7 +14,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import {
   FileText,
   ArrowLeft,
-  Download,
   MessageSquare,
   ChevronDown,
   ChevronUp,
@@ -30,8 +29,6 @@ import {
 import Link from "next/link"
 import dynamic from "next/dynamic"
 
-import { StyleSheet } from "@react-pdf/renderer"
-import LeaseAnalysisPDF from "@/components/lease-analysis-pdf"
 import StateSelector from "@/components/state-selector"
 import { getStateRule } from "@/lib/state-rules"
 import { useLanguage } from "@/components/language-provider"
@@ -367,7 +364,7 @@ export default function BreakdownPage() {
                         {/* Original Text */}
                         <div className="p-4 bg-gray-50 rounded-lg border-l-4 border-gray-300">
                           <h4 className="font-medium text-gray-900 mb-2">{t('breakdown.originalLeaseText')}:</h4>
-                          <p className="text-sm text-gray-700 italic">"{clause.originalText}"</p>
+                          <p className="text-sm text-gray-700 italic">&quot;{clause.originalText}&quot;</p>
                         </div>
 
                         {/* Plain English Explanation */}

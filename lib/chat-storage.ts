@@ -31,10 +31,10 @@ export class ChatStorage {
 
       const sessions = JSON.parse(stored)
       // Convert date strings back to Date objects
-      return sessions.map((session: any) => ({
+      return sessions.map((session: ChatSession) => ({
         ...session,
         lastActivity: new Date(session.lastActivity),
-        messages: session.messages.map((msg: any) => ({
+        messages: session.messages.map((msg: ChatMessage) => ({
           ...msg,
           timestamp: new Date(msg.timestamp),
         })),

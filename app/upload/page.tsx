@@ -19,7 +19,7 @@ interface FileError {
 export default function UploadPage() {
   const { t } = useLanguage()
   const [uploadState, setUploadState] = useState<UploadState>("idle")
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [, setSelectedFile] = useState<File | null>(null)
   const [error, setError] = useState<FileError | null>(null)
   const [uploadProgress, setUploadProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -81,7 +81,7 @@ export default function UploadPage() {
         setUploadState("success")
         localStorage.setItem('leaseAnalysis', JSON.stringify(result.analysis))
       }, 500)
-    } catch (err) {
+    } catch {
       clearInterval(progressInterval)
       setError({
         type: "upload",
@@ -103,7 +103,7 @@ export default function UploadPage() {
     setSelectedFile(file)
     setError(null)
     uploadFile(file)
-  }, [t])
+  }, [validateFile, uploadFile])
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -289,7 +289,7 @@ export default function UploadPage() {
                             {uploadState === "dragover" ? "Drop your file here" : "Drag and drop your lease"}
                           </h3>
                           <p className="text-gray-600 mb-6" id="upload-description">
-                            Upload a PDF or image of your lease document. We'll keep your information secure and
+                            Upload a PDF or image of your lease document. We&apos;ll keep your information secure and
                             private.
                           </p>
 

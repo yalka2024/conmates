@@ -22,7 +22,7 @@ export default function ChatPage() {
       {
         id: "welcome",
         role: "assistant",
-        content: `Hi! I'm your AI assistant powered by GPT-4. I'm here to help you with:
+        content: `Hi! I&apos;m your AI assistant powered by GPT-4. I&apos;m here to help you with:
 
 • **Lease Questions** - Understanding terms, clauses, and your rights
 • **Platform Help** - Navigating Conmates features and tools  
@@ -45,7 +45,7 @@ What would you like to know?`,
 
   const handleSuggestionClick = (suggestion: { text: string; category: string }) => {
     setCategory(suggestion.category)
-    handleInputChange({ target: { value: suggestion.text } } as any)
+    handleInputChange({ target: { value: suggestion.text } } as React.ChangeEvent<HTMLInputElement>)
   }
 
   const getCategoryIcon = (cat: string) => {

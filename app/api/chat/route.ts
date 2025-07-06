@@ -6,15 +6,10 @@ export async function POST(req: NextRequest) {
   try {
     const { messages, category = "general" } = await req.json()
 
-    // Legal disclaimer that will be appended to legal responses
-    const legalDisclaimer = `
+    if (!messages || !Array.isArray(messages)) {
+      return new Response("Invalid messages format", { status: 400 })
+    }
 
----
-**⚠️ IMPORTANT LEGAL DISCLAIMER:**
-This information is provided for educational purposes only and should not be considered as legal advice. Laws vary by state, city, and individual circumstances. For specific legal advice regarding your situation, please consult with a qualified attorney or legal professional. Conmates is not a law firm and does not provide legal representation or advice.
----
-
-`
 
     // Category-specific system prompts
     const systemPrompts = {

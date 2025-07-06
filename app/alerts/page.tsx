@@ -375,7 +375,7 @@ export default function AlertsPage() {
                       <Bell className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                       <h3 className="text-lg font-medium text-gray-900 mb-2">No upcoming alerts</h3>
                       <p className="text-gray-600">
-                        You're all caught up! Create a new alert to stay on top of important dates.
+                        You&apos;re all caught up! Create a new alert to stay on top of important dates.
                       </p>
                     </div>
                   ) : (

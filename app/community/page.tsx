@@ -87,7 +87,7 @@ export default function CommunityPage() {
       id: "1",
       title: "Landlord wants to increase rent by 40% - is this legal?",
       content:
-        "My landlord just gave me 30 days notice that they're increasing my rent from $1,200 to $1,680. This seems excessive. I'm in California and have been a good tenant for 2 years. Is there anything I can do?",
+        "My landlord just gave me 30 days notice that they&apos;re increasing my rent from $1,200 to $1,680. This seems excessive. I&apos;m in California and have been a good tenant for 2 years. Is there anything I can do?",
       category: "rent-increases",
       location: "California",
       tags: ["rent-control", "california", "tenant-rights"],
@@ -127,7 +127,7 @@ export default function CommunityPage() {
       id: "2",
       title: "Security deposit not returned after 60 days - what are my options?",
       content:
-        "I moved out of my apartment 2 months ago and still haven't received my $1,500 security deposit back. The landlord isn't responding to my calls or emails. The place was in good condition when I left. What legal options do I have?",
+        "I moved out of my apartment 2 months ago and still haven&apos;t received my $1,500 security deposit back. The landlord isn&apos;t responding to my calls or emails. The place was in good condition when I left. What legal options do I have?",
       category: "security-deposits",
       location: "Texas",
       tags: ["security-deposit", "texas", "landlord-communication"],
@@ -154,9 +154,9 @@ export default function CommunityPage() {
     },
     {
       id: "3",
-      title: "Neighbor's loud music every night - landlord won't help",
+      title: "Neighbor&apos;s loud music every night - landlord won&apos;t help",
       content:
-        "My upstairs neighbor plays loud music until 2-3 AM every night. I've complained to the landlord multiple times but they say it's not their problem. I can't sleep and it's affecting my work. What can I do?",
+        "My upstairs neighbor plays loud music until 2-3 AM every night. I&apos;ve complained to the landlord multiple times but they say it&apos;s not their problem. I can&apos;t sleep and it&apos;s affecting my work. What can I do?",
       category: "neighbor-issues",
       location: "New York",
       tags: ["noise", "neighbors", "quiet-enjoyment"],
@@ -171,7 +171,7 @@ export default function CommunityPage() {
         {
           id: "a4",
           content:
-            "You have a right to 'quiet enjoyment' of your rental. Document the noise with recordings and timestamps. File complaints with your local noise control board and consider withholding rent if the landlord continues to ignore the issue (but check local laws first).",
+            "You have a right to &apos;quiet enjoyment&apos; of your rental. Document the noise with recordings and timestamps. File complaints with your local noise control board and consider withholding rent if the landlord continues to ignore the issue (but check local laws first).",
           author: "Tenant Rights Expert",
           timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000),
           upvotes: 6,
@@ -729,10 +729,10 @@ export default function CommunityPage() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-3">❌ Don't:</h4>
+                  <h4 className="font-medium text-gray-900 mb-3">❌ Don&apos;t:</h4>
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li>• Share personal information (addresses, names)</li>
-                    <li>• Give legal advice unless you're qualified</li>
+                    <li>• Give legal advice unless you&apos;re qualified</li>
                     <li>• Post duplicate questions</li>
                     <li>• Use offensive or discriminatory language</li>
                     <li>• Spam or self-promote</li>

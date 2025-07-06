@@ -6,7 +6,6 @@ import { Upload, FileText, Unlock, Bot, MessageSquare, Users, BookOpen, Bell, Ph
 import { LanguageSelector } from "@/components/language-selector"
 import { MobileNavigation } from "@/components/mobile-navigation"
 import Link from "next/link"
-import { useState } from "react"
 import StateSelector from "@/components/state-selector"
 import { useLanguage } from "@/components/language-provider"
 import { useStateContext } from "@/components/state-provider"
@@ -329,14 +328,14 @@ export default function HomePage() {
               <h4 className="font-semibold text-gray-900 mb-4">{t('home.legal')}</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/privacy" className="text-gray-600 hover:text-blue-600 transition-colors">
                     {t('home.privacyPolicy')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <Link href="/terms" className="text-gray-600 hover:text-blue-600 transition-colors">
                     {t('home.termsOfService')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">

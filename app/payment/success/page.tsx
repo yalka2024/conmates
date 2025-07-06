@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Download, ArrowRight, FileText, Shield } from "lucide-react"
+import { CheckCircle, ArrowRight, FileText, Shield } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/components/language-provider"
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const { t } = useLanguage()
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
@@ -172,4 +172,17 @@ export default function PaymentSuccessPage() {
       </div>
     </div>
   )
-} 
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    </div>}>
+      <PaymentSuccessContent />
+    </Suspense>
+  )
+}

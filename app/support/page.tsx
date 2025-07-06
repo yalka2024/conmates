@@ -199,7 +199,7 @@ export default function SupportPage() {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-red-800 mb-2">Facing an Emergency?</h3>
                   <p className="text-red-700 mb-4">
-                    If you've received an eviction notice, have unsafe living conditions, or are facing homelessness,
+                    If you&apos;ve received an eviction notice, have unsafe living conditions, or are facing homelessness,
                     get help immediately.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
@@ -315,7 +315,7 @@ export default function SupportPage() {
                       <DialogHeader>
                         <DialogTitle>Book Your Consultation</DialogTitle>
                         <DialogDescription>
-                          Tell us about your situation and we'll match you with the right expert.
+                          Tell us about your situation and we&apos;ll match you with the right expert.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-4">
@@ -512,12 +512,12 @@ export default function SupportPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2 text-blue-800">
                     <DollarSign className="w-5 h-5" />
-                    <span>Can't Afford Conmates Pro?</span>
+                    <span>Can&apos;t Afford Conmates Pro?</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-blue-700 mb-4">
-                    We believe everyone deserves access to housing help. If you can't afford our Pro subscription, we
+                    We believe everyone deserves access to housing help. If you can&apos;t afford our Pro subscription, we
                     offer:
                   </p>
                   <ul className="text-blue-700 space-y-2 mb-4">

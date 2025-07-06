@@ -225,7 +225,7 @@ export default function APIAccessPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Conmates API</h1>
             <p className="text-lg text-gray-600 mb-6">
-                              Integrate Conmates's powerful lease analysis and tenant support tools into your organization's workflow.
+                              Integrate Conmates&apos;s powerful lease analysis and tenant support tools into your organization&apos;s workflow.
             </p>
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-600">
               <div className="flex items-center space-x-1">
@@ -296,7 +296,7 @@ export default function APIAccessPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-4">
-                      Create and manage automated alerts for your clients' important lease dates and deadlines.
+                      Create and manage automated alerts for your clients&apos; important lease dates and deadlines.
                     </p>
                     <ul className="text-sm text-gray-600 space-y-1">
                       <li>• Automated notifications</li>

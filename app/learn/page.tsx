@@ -82,7 +82,7 @@ export default function LearnPage() {
         {
           id: "q1",
           question: "What is the maximum amount a landlord can charge for a security deposit in most states?",
-          options: ["1 month's rent", "2 months' rent", "3 months' rent", "No limit"],
+          options: ["1 month&apos;s rent", "2 months&apos; rent", "3 months&apos; rent", "No limit"],
           correctAnswer: 1,
           explanation: "Most states limit security deposits to 1-2 months' rent, with many capping it at 2 months.",
           points: 20,
@@ -530,7 +530,7 @@ export default function LearnPage() {
                 <TabsContent value="progress" className="space-y-6">
                   <div className="text-center mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Learning Progress</h2>
-                    <p className="text-gray-600">Track your learning journey and see how you're improving over time.</p>
+                    <p className="text-gray-600">Track your learning journey and see how you&apos;re improving over time.</p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">

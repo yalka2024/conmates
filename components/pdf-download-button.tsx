@@ -6,9 +6,26 @@ import { Download } from "lucide-react"
 import React from "react"
 
 interface PDFDownloadButtonProps {
-  clauses: Array<any>
-  redFlags: Array<any>
-  actionableTips: Array<any>
+  clauses: Array<{
+    id: string
+    title: string
+    section: string
+    originalText: string
+    explanation: string
+    impact: string
+    tips: string[]
+  }>
+  redFlags: Array<{
+    severity: string
+    title: string
+    description: string
+    impact: string
+    action: string
+  }>
+  actionableTips: Array<{
+    category: string
+    tips: string[]
+  }>
 }
 
 const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ clauses, redFlags, actionableTips }) => (
@@ -33,4 +50,4 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ clauses, redFlags
   </PDFDownloadLink>
 )
 
-export default PDFDownloadButton 
+export default PDFDownloadButton    

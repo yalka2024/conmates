@@ -222,11 +222,11 @@ interface LeaseAnalysisPDFProps {
     section: string
     originalText: string
     explanation: string
-    impact: "high" | "medium" | "low"
+    impact: string
     tips: string[]
   }>
   redFlags: Array<{
-    severity: "high" | "medium"
+    severity: string
     title: string
     description: string
     impact: string
@@ -268,7 +268,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
           <Text style={styles.sectionTitle}>Executive Summary</Text>
           <Text style={{ fontSize: 11, color: "#4B5563", marginBottom: 10 }}>
             This report provides a comprehensive analysis of your lease agreement, breaking down complex legal language
-            into plain English. We've identified key terms, potential concerns, and actionable recommendations to help
+            into plain English. We&apos;ve identified key terms, potential concerns, and actionable recommendations to help
             you understand your rights and responsibilities.
           </Text>
           <Text style={{ fontSize: 11, color: "#4B5563" }}>
@@ -281,7 +281,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
         {/* Clause Analysis - First few clauses */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Clause-by-Clause Analysis</Text>
-          {clauses.slice(0, 2).map((clause, index) => (
+          {clauses.slice(0, 2).map((clause) => (
             <View key={clause.id} style={styles.clauseContainer}>
               <Text style={styles.clauseTitle}>{clause.title}</Text>
               <Text style={styles.clauseSection}>{clause.section}</Text>
@@ -291,7 +291,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
                 </Text>
               </View>
               <View style={styles.originalText}>
-                <Text>Original Text: "{clause.originalText}"</Text>
+                <Text>Original Text: &quot;{clause.originalText}&quot;</Text>
               </View>
               <View style={styles.explanation}>
                 <Text>Plain English: {clause.explanation}</Text>
@@ -319,7 +319,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Clause Analysis (Continued)</Text>
-          {clauses.slice(2).map((clause, index) => (
+          {clauses.slice(2).map((clause) => (
             <View key={clause.id} style={styles.clauseContainer}>
               <Text style={styles.clauseTitle}>{clause.title}</Text>
               <Text style={styles.clauseSection}>{clause.section}</Text>
@@ -329,7 +329,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
                 </Text>
               </View>
               <View style={styles.originalText}>
-                <Text>Original Text: "{clause.originalText}"</Text>
+                <Text>Original Text: &quot;{clause.originalText}&quot;</Text>
               </View>
               <View style={styles.explanation}>
                 <Text>Plain English: {clause.explanation}</Text>
@@ -358,7 +358,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🚩 Potential Red Flags</Text>
           <Text style={{ fontSize: 11, color: "#4B5563", marginBottom: 15 }}>
-            We've identified several clauses that may work against your interests. Here's what to watch out for:
+            We&apos;ve identified several clauses that may work against your interests. Here&apos;s what to watch out for:
           </Text>
           {redFlags.map((flag, index) => (
             <View key={index} style={styles.redFlagContainer}>

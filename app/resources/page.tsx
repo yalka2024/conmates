@@ -470,7 +470,7 @@ export default function ResourcesPage() {
                 <div>
                   <h4 className="font-medium text-red-800 mb-2">Facing Eviction?</h4>
                   <p className="text-sm text-red-700 mb-2">
-                    Don't wait - get help immediately. Many evictions can be prevented with quick action.
+                    Don&apos;t wait - get help immediately. Many evictions can be prevented with quick action.
                   </p>
                   <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white">
                     <Phone className="w-4 h-4 mr-2" />
