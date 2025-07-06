@@ -1,13 +1,20 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useRef, useMemo } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Upload, FileText, ImageIcon, AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Upload, FileText, AlertCircle, CheckCircle2, Loader2, ArrowLeft, Shield, Zap, Crown, AlertTriangle, Star, CheckCircle, Info } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/components/language-provider"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+import { useRouter } from "next/navigation"
 
 type UploadState = "idle" | "dragover" | "uploading" | "success" | "error"
 
@@ -19,91 +26,96 @@ interface FileError {
 export default function UploadPage() {
   const { t } = useLanguage()
   const [uploadState, setUploadState] = useState<UploadState>("idle")
-  const [, setSelectedFile] = useState<File | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [error, setError] = useState<FileError | null>(null)
   const [uploadProgress, setUploadProgress] = useState(0)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [showPremium, setShowPremium] = useState(false)
+  const [analysisType, setAnalysisType] = useState<'free' | 'premium'>('free')
+  const router = useRouter()
 
-  const acceptedTypes = ["application/pdf", "image/jpeg", "image/png", "image/jpg"]
+  // Wrap acceptedTypes in useMemo to stabilize it
+  const acceptedTypes = useMemo(() => ["application/pdf"], [])
   const maxFileSize = 10 * 1024 * 1024 // 10MB
 
-  const validateFile = (file: File): FileError | null => {
-    if (!acceptedTypes.includes(file.type)) {
-      return {
-        type: "format",
-        message: t("upload.formatError"),
-      }
-    }
-
-    if (file.size > maxFileSize) {
-      return {
-        type: "size",
-        message: t("upload.fileSizeError"),
-      }
-    }
-
-    return null
-  }
-
-  const uploadFile = async (file: File) => {
-    setUploadState("uploading")
-    setUploadProgress(0)
-
-    // Simulate upload progress
-    const progressInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(progressInterval)
-          return 90
+  const handleFileSelect = useCallback(
+    (file: File) => {
+      // Define functions inside useCallback
+      const validateFile = (file: File): FileError | null => {
+        if (!acceptedTypes.includes(file.type)) {
+          return {
+            type: "format",
+            message: t("upload.formatError"),
+          }
         }
-        return prev + Math.random() * 15
-      })
-    }, 200)
-
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-
-      clearInterval(progressInterval)
-      setUploadProgress(100)
-
-      if (!response.ok) {
-        throw new Error('Upload failed')
+        if (file.size > maxFileSize) {
+          return {
+            type: "size",
+            message: t("upload.fileSizeError"),
+          }
+        }
+        return null
       }
 
-      const result = await response.json()
-      setTimeout(() => {
-        setUploadState("success")
-        localStorage.setItem('leaseAnalysis', JSON.stringify(result.analysis))
-      }, 500)
-    } catch {
-      clearInterval(progressInterval)
-      setError({
-        type: "upload",
-        message: t("upload.uploadError"),
-      })
-      setUploadState("error")
-    }
-  }
+      const uploadFile = async (file: File) => {
+        setUploadState("uploading")
+        setUploadProgress(0)
 
-  const handleFileSelect = useCallback((file: File) => {
-    const fileError = validateFile(file)
+        const progressInterval = setInterval(() => {
+          setUploadProgress((prev) => {
+            if (prev >= 90) {
+              clearInterval(progressInterval)
+              return 90
+            }
+            return prev + Math.random() * 15
+          })
+        }, 200)
 
-    if (fileError) {
-      setError(fileError)
-      setUploadState("error")
-      return
-    }
+        try {
+          const formData = new FormData()
+          formData.append("file", file)
+          formData.append("tier", analysisType)
 
-    setSelectedFile(file)
-    setError(null)
-    uploadFile(file)
-  }, [validateFile, uploadFile])
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          })
+
+          clearInterval(progressInterval)
+          setUploadProgress(100)
+
+          if (!response.ok) {
+            throw new Error("Upload failed")
+          }
+
+          const result = await response.json()
+          setTimeout(() => {
+            setUploadState("success")
+            localStorage.setItem("leaseAnalysis", JSON.stringify(result.analysis))
+          }, 500)
+        } catch {
+          clearInterval(progressInterval)
+          setError({
+            type: "upload",
+            message: t("upload.uploadError"),
+          })
+          setUploadState("error")
+        }
+      }
+
+      const fileError = validateFile(file)
+
+      if (fileError) {
+        setError(fileError)
+        setUploadState("error")
+        return
+      }
+
+      setSelectedFile(file)
+      setError(null)
+      uploadFile(file)
+    },
+    [acceptedTypes, maxFileSize, t, analysisType] // Dependencies updated
+  )
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -115,7 +127,7 @@ export default function UploadPage() {
         handleFileSelect(files[0])
       }
     },
-    [handleFileSelect],
+    [handleFileSelect]
   )
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -128,15 +140,37 @@ export default function UploadPage() {
     setUploadState("idle")
   }, [])
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files && files.length > 0) {
-      handleFileSelect(files[0])
+  const handleBrowseClick = (e?: React.MouseEvent) => {
+    // Prevent event bubbling to avoid double triggers
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
     }
-  }
-
-  const handleBrowseClick = () => {
-    fileInputRef.current?.click()
+    
+    if (uploadState !== "uploading") {
+      // Use a simple approach - create input and trigger it
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = '.pdf'
+      input.style.display = 'none'
+      
+      const handleFileChange = (e: Event) => {
+        const target = e.target as HTMLInputElement
+        if (target.files && target.files.length > 0) {
+          console.log('File selected:', target.files[0].name)
+          handleFileSelect(target.files[0])
+        }
+        // Clean up
+        input.removeEventListener('change', handleFileChange)
+        if (document.body.contains(input)) {
+          document.body.removeChild(input)
+        }
+      }
+      
+      input.addEventListener('change', handleFileChange)
+      document.body.appendChild(input)
+      input.click()
+    }
   }
 
   const handleRetry = () => {
@@ -164,6 +198,82 @@ export default function UploadPage() {
     }
   }
 
+  const handlePremiumUpgrade = () => {
+    router.push('/payment?plan=premium-analysis')
+  }
+
+  const handleAskLawyer = () => {
+    router.push('/payment?plan=lawyer-consultation')
+  }
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
+    setUploadState("uploading");
+    setUploadProgress(0);
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("tier", analysisType);
+
+    try {
+      // Simulate progress
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 200);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      if (response.ok) {
+        const result = await response.json();
+        
+        if (analysisType === 'premium') {
+          // For premium analysis, redirect to payment
+          const paymentResponse = await fetch("/api/create-checkout-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              tier: "premium",
+              analysisId: Date.now().toString(), // Simple ID for demo
+            }),
+          });
+
+          if (paymentResponse.ok) {
+            const { url } = await paymentResponse.json();
+            window.location.href = url;
+          } else {
+            throw new Error("Payment setup failed");
+          }
+        } else {
+          // For free analysis, store and redirect to summary
+          localStorage.setItem("leaseAnalysis", JSON.stringify(result));
+          window.location.href = "/summary";
+        }
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setUploadState("error");
+      setUploadProgress(0);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}
@@ -172,13 +282,13 @@ export default function UploadPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <ArrowLeft className="w-5 h-5 text-gray-600" />
-              <span className="text-gray-600 hover:text-blue-600 transition-colors">{t('upload.backToHome')}</span>
+              <span className="text-gray-600 hover:text-blue-600 transition-colors">{t("upload.backToHome")}</span>
             </Link>
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                 <FileText className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-semibold text-gray-900">{t('upload.leaseEasy')}</span>
+              <span className="text-xl font-semibold text-gray-900">{t("upload.leaseEasy")}</span>
             </div>
           </div>
         </div>
@@ -188,9 +298,9 @@ export default function UploadPage() {
         <div className="max-w-2xl mx-auto">
           {/* Page Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('upload.uploadYourLease')}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t("upload.uploadYourLease")}</h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              {t('upload.uploadInstructions')}
+              {t("upload.uploadInstructions")} {/* Removed replace() - rely on translation fix */}
             </p>
           </div>
 
@@ -202,11 +312,11 @@ export default function UploadPage() {
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-8 h-8 text-green-600" />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('upload.analysisComplete')}</h2>
-                  <p className="text-gray-600 mb-6">{t('upload.analysisSuccess')}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("upload.analysisComplete")}</h2>
+                  <p className="text-gray-600 mb-6">{t("upload.analysisSuccess")}</p>
                   <Link href="/summary">
                     <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                      {t('upload.viewLeaseSummary')}
+                      {t("upload.viewLeaseSummary")}
                     </Button>
                   </Link>
                 </div>
@@ -229,15 +339,7 @@ export default function UploadPage() {
                       }
                     }}
                   >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".pdf,.jpg,.jpeg,.png"
-                      onChange={handleFileInputChange}
-                      className="hidden"
-                      disabled={uploadState === "uploading"}
-                      aria-describedby="upload-description"
-                    />
+                    {/* File input is created dynamically */}
 
                     {uploadState === "uploading" ? (
                       /* Loading State */
@@ -289,12 +391,11 @@ export default function UploadPage() {
                             {uploadState === "dragover" ? "Drop your file here" : "Drag and drop your lease"}
                           </h3>
                           <p className="text-gray-600 mb-6" id="upload-description">
-                            Upload a PDF or image of your lease document. We&apos;ll keep your information secure and
-                            private.
+                            {t("upload.uploadInstructions")} {/* Rely on fixed translation */}
                           </p>
 
                           <Button
-                            onClick={handleBrowseClick}
+                            onClick={(e) => handleBrowseClick(e)}
                             size="lg"
                             className="bg-blue-600 hover:bg-blue-700 text-white mb-4"
                           >
@@ -303,14 +404,10 @@ export default function UploadPage() {
                         </div>
 
                         {/* Supported Formats */}
-                        <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                        <div className="flex items-center justify-center text-sm text-gray-500">
                           <div className="flex items-center space-x-2">
                             <FileText className="w-4 h-4" />
-                            <span>PDF</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <ImageIcon className="w-4 h-4" />
-                            <span>JPG, PNG</span>
+                            <span>PDF files only</span>
                           </div>
                         </div>
                       </div>

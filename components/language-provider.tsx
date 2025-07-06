@@ -289,6 +289,8 @@ export const translations: {
     "resources.language.spanish": "Spanish",
     "resources.language.chinese": "Chinese",
     "resources.language.arabic": "Arabic",
+    "resources.language.creole": "Creole",
+    "resources.language.polish": "Polish",
     // Template Letters
     "resources.template.repairRequest.title": "Repair Request Letter",
     "resources.template.depositDemand.title": "Security Deposit Demand Letter",
@@ -367,8 +369,7 @@ export const translations: {
     "payment.processing": "Processing...",
     "payment.payNow": "Pay Now",
     "payment.stripeSecurity": "Your payment is secure, and we never store your financial data. All transactions are processed through Stripe's secure servers.",
-    "payment.moneyBackGuarantee": "30-Day Money Back Guarantee",
-    "payment.guaranteeDescription": "Not satisfied? Get a full refund within 30 days, no questions asked.",
+
 
     // Payment success page translations
     "payment.success.title": "Payment Successful!",

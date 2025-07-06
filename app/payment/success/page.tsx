@@ -68,7 +68,7 @@ function PaymentSuccessContent() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">{t('payment.success.amount')}</span>
-                  <span className="font-medium">$9.99</span>
+                  <span className="font-medium">$10.00 - $15.00</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">{t('payment.success.status')}</span>

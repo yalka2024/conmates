@@ -507,36 +507,7 @@ export default function SupportPage() {
                 ))}
               </div>
 
-              {/* Payment Plan for Platform */}
-              <Card className="border-blue-200 bg-blue-50">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2 text-blue-800">
-                    <DollarSign className="w-5 h-5" />
-                    <span>Can&apos;t Afford Conmates Pro?</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-blue-700 mb-4">
-                    We believe everyone deserves access to housing help. If you can&apos;t afford our Pro subscription, we
-                    offer:
-                  </p>
-                  <ul className="text-blue-700 space-y-2 mb-4">
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                      <span>Payment plans as low as $2/month</span>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                      <span>Sliding scale pricing based on income</span>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                      <span>Free access for verified low-income users</span>
-                    </li>
-                  </ul>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">Apply for Financial Assistance</Button>
-                </CardContent>
-              </Card>
+
             </TabsContent>
 
             {/* Resources Tab */}
@@ -584,24 +555,75 @@ export default function SupportPage() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="p-3 border rounded-lg">
-                      <h4 className="font-medium text-gray-900">Tenant Rights Workshop</h4>
-                      <p className="text-sm text-gray-600 mb-2">Free online course on tenant rights</p>
-                      <Button size="sm" variant="outline">
-                        Start Course
+                      <h4 className="font-medium text-gray-900">Renter 101 Online Course</h4>
+                      <p className="text-sm text-gray-600 mb-2">Free, self-paced online course for U.S. renters covering budgeting, finding and keeping a home, lease agreements, security deposits, and more.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://extension.umn.edu/courses-and-events/renter-101-online-course" target="_blank" rel="noopener noreferrer">View Online</a>
                       </Button>
                     </div>
                     <div className="p-3 border rounded-lg">
-                      <h4 className="font-medium text-gray-900">First-Time Renter Guide</h4>
-                      <p className="text-sm text-gray-600 mb-2">Complete guide to renting your first apartment</p>
-                      <Button size="sm" variant="outline">
-                        Download PDF
+                      <h4 className="font-medium text-gray-900">California Tenants: A Guide to Residential Tenants' and Landlords' Rights and Responsibilities (2025)</h4>
+                      <p className="text-sm text-gray-600 mb-2">The most comprehensive, official guide for California tenants, available in English and Spanish.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://landlordtenant.dre.ca.gov/pdf/resources/CaliforniaTenantRenterGuide.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
                       </Button>
                     </div>
                     <div className="p-3 border rounded-lg">
-                      <h4 className="font-medium text-gray-900">Know Your Rights Checklist</h4>
-                      <p className="text-sm text-gray-600 mb-2">Quick reference for tenant rights</p>
-                      <Button size="sm" variant="outline">
-                        View Checklist
+                      <h4 className="font-medium text-gray-900">NYC Rent Guidelines Board: Tenant Resources</h4>
+                      <p className="text-sm text-gray-600 mb-2">Official NYC government site with guides, FAQs, and resources for New York tenants.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://rentguidelinesboard.cityofnewyork.us/resources/" target="_blank" rel="noopener noreferrer">View Online</a>
+                      </Button>
+                    </div>
+                    <div className="p-3 border rounded-lg">
+                      <h4 className="font-medium text-gray-900">Texas Property Code: Landlord and Tenant</h4>
+                      <p className="text-sm text-gray-600 mb-2">Official Texas statutes for landlord and tenant law, including rights and responsibilities.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm" target="_blank" rel="noopener noreferrer">View Online</a>
+                      </Button>
+                    </div>
+                    <div className="p-3 border rounded-lg">
+                      <h4 className="font-medium text-gray-900">Illinois Legal Aid: Tenant Rights</h4>
+                      <p className="text-sm text-gray-600 mb-2">Comprehensive, plain-language guide to tenant rights in Illinois, including eviction, repairs, and security deposits.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://www.illinoislegalaid.org/legal-information/tenants-rights" target="_blank" rel="noopener noreferrer">View Online</a>
+                      </Button>
+                    </div>
+                    <div className="p-3 border rounded-lg">
+                      <h4 className="font-medium text-gray-900">HUD Fair Housing Training & Complaint Portal</h4>
+                      <p className="text-sm text-gray-600 mb-2">Learn about fair housing rights and file a complaint with the U.S. Department of Housing and Urban Development.</p>
+                      <Button 
+                        size="sm" 
+                        asChild
+                        variant="outline"
+                        className="mt-1"
+                      >
+                        <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp/online-complaint" target="_blank" rel="noopener noreferrer">View Online</a>
                       </Button>
                     </div>
                   </CardContent>

@@ -31,6 +31,15 @@ import {
   Heart,
   Eye,
   MessageCircle,
+  TrendingUp,
+  Clock,
+  Reply,
+  Bookmark,
+  Share2,
+  User,
+  Shield,
+  HelpCircle,
+  Lightbulb,
 } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/components/language-provider"
@@ -184,17 +193,60 @@ export default function CommunityPage() {
   ])
 
   const categories = [
-    { value: "all", label: t('community.category.all') },
-    { value: "rent-increases", label: t('community.category.rentIncreases') },
-    { value: "security-deposits", label: t('community.category.securityDeposits') },
-    { value: "repairs-maintenance", label: t('community.category.repairsMaintenance') },
-    { value: "neighbor-issues", label: t('community.category.neighborIssues') },
-    { value: "lease-terms", label: t('community.category.leaseTerms') },
-    { value: "eviction", label: t('community.category.eviction') },
-    { value: "discrimination", label: t('community.category.discrimination') },
-    { value: "utilities", label: t('community.category.utilities') },
-    { value: "moving-out", label: t('community.category.movingOut') },
-    { value: "other", label: t('community.category.other') },
+    {
+      id: "general",
+      title: "General Discussion",
+      description: "General tenant topics and questions",
+      icon: MessageCircle,
+      color: "blue",
+      topics: 156,
+      posts: 892
+    },
+    {
+      id: "legal-help",
+      title: "Legal Help",
+      description: "Get help with legal issues and questions",
+      icon: Shield,
+      color: "green",
+      topics: 89,
+      posts: 445
+    },
+    {
+      id: "lease-negotiation",
+      title: "Lease Negotiation",
+      description: "Tips and strategies for negotiating leases",
+      icon: TrendingUp,
+      color: "purple",
+      topics: 67,
+      posts: 234
+    },
+    {
+      id: "repairs-maintenance",
+      title: "Repairs & Maintenance",
+      description: "Dealing with repairs and maintenance issues",
+      icon: HelpCircle,
+      color: "orange",
+      topics: 123,
+      posts: 567
+    },
+    {
+      id: "tips-advice",
+      title: "Tips & Advice",
+      description: "Share and discover tenant tips",
+      icon: Lightbulb,
+      color: "yellow",
+      topics: 234,
+      posts: 789
+    },
+    {
+      id: "emergency",
+      title: "Emergency Help",
+      description: "Urgent situations and immediate assistance",
+      icon: AlertTriangle,
+      color: "red",
+      topics: 23,
+      posts: 89
+    }
   ]
 
   const locations = [
@@ -284,471 +336,317 @@ export default function CommunityPage() {
     }
   }
 
+  const recentDiscussions = [
+    {
+      id: 1,
+      title: "Landlord refusing to fix broken heater - what are my rights?",
+      author: "Sarah M.",
+      category: "repairs-maintenance",
+      replies: 12,
+      views: 156,
+      likes: 8,
+      timeAgo: "2 hours ago",
+      isSticky: false,
+      isSolved: false
+    },
+    {
+      id: 2,
+      title: "Successfully negotiated $200 rent reduction - here's how",
+      author: "Mike C.",
+      category: "lease-negotiation",
+      replies: 23,
+      views: 342,
+      likes: 45,
+      timeAgo: "4 hours ago",
+      isSticky: true,
+      isSolved: true
+    },
+    {
+      id: 3,
+      title: "Security deposit dispute - landlord claiming $500 in damages",
+      author: "Jennifer L.",
+      category: "legal-help",
+      replies: 18,
+      views: 267,
+      likes: 12,
+      timeAgo: "6 hours ago",
+      isSticky: false,
+      isSolved: false
+    },
+    {
+      id: 4,
+      title: "Best time to negotiate lease renewal?",
+      author: "David R.",
+      category: "tips-advice",
+      replies: 31,
+      views: 189,
+      likes: 22,
+      timeAgo: "8 hours ago",
+      isSticky: false,
+      isSolved: false
+    },
+    {
+      id: 5,
+      title: "Landlord entered without notice - legal recourse?",
+      author: "Amanda K.",
+      category: "legal-help",
+      replies: 15,
+      views: 203,
+      likes: 9,
+      timeAgo: "12 hours ago",
+      isSticky: false,
+      isSolved: false
+    }
+  ]
+
+  const topContributors = [
+    { name: "Sarah M.", posts: 156, helpful: 89, avatar: "SM" },
+    { name: "Mike C.", posts: 134, helpful: 67, avatar: "MC" },
+    { name: "Jennifer L.", posts: 98, helpful: 45, avatar: "JL" },
+    { name: "David R.", posts: 87, helpful: 34, avatar: "DR" },
+    { name: "Amanda K.", posts: 76, helpful: 28, avatar: "AK" }
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      {/* Header */}
-      <header className="border-b border-blue-100 bg-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-              <span className="text-gray-600 hover:text-blue-600 transition-colors">Back to home</span>
-            </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-                              <span className="text-xl font-semibold text-gray-900">Conmates Community</span>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Tenant Community</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Connect with fellow tenants, share experiences, and get help from the community. 
+            Ask questions, share tips, and learn from others who have been in your shoes.
+          </p>
+        </div>
+
+        {/* Search and Actions */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              placeholder="Search discussions, topics, or users..."
+              className="pl-10"
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter
+            </Button>
+            <Button asChild>
+              <Link href="/community/new-discussion">
+                <Plus className="w-4 h-4 mr-2" />
+                New Discussion
+              </Link>
+            </Button>
           </div>
         </div>
-      </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Page Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Renter Support Community</h1>
-            <p className="text-lg text-gray-600 mb-6">
-              Get help from fellow renters and housing experts. Ask questions anonymously and share your experiences.
-            </p>
-
-            {/* Community Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">1,247</div>
-                <div className="text-sm text-gray-600">Questions Asked</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">892</div>
-                <div className="text-sm text-gray-600">Questions Resolved</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">3,456</div>
-                <div className="text-sm text-gray-600">Community Members</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600">24</div>
-                <div className="text-sm text-gray-600">Expert Volunteers</div>
-              </div>
-            </div>
-          </div>
-
+        <div className="grid lg:grid-cols-4 gap-8">
           {/* Main Content */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <TabsList className="bg-blue-50 p-1">
-                <TabsTrigger value="browse" className="data-[state=active]:bg-white">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Browse Questions
-                </TabsTrigger>
-                <TabsTrigger value="experts" className="data-[state=active]:bg-white">
-                  <Users className="w-4 h-4 mr-2" />
-                  Expert Answers
-                </TabsTrigger>
-              </TabsList>
-
-              <Dialog open={isAskingQuestion} onOpenChange={setIsAskingQuestion}>
-                <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Ask a Question
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Ask the Community</DialogTitle>
-                    <DialogDescription>
-                      Your question will be posted anonymously. Be specific to get the best help.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="title">Question Title *</Label>
-                      <Input
-                        id="title"
-                        placeholder="e.g., Can my landlord increase rent by 30%?"
-                        value={newQuestion.title}
-                        onChange={(e) => setNewQuestion((prev) => ({ ...prev, title: e.target.value }))}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="content">Detailed Description *</Label>
-                      <Textarea
-                        id="content"
-                        placeholder="Provide as much detail as possible about your situation..."
-                        className="min-h-[120px]"
-                        value={newQuestion.content}
-                        onChange={(e) => setNewQuestion((prev) => ({ ...prev, content: e.target.value }))}
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label>Category *</Label>
-                        <Select
-                          value={newQuestion.category}
-                          onValueChange={(value) => setNewQuestion((prev) => ({ ...prev, category: value }))}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categories.slice(1).map((category) => (
-                              <SelectItem key={category.value} value={category.value}>
-                                {category.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label>Location (Optional)</Label>
-                        <Select
-                          value={newQuestion.location}
-                          onValueChange={(value) => setNewQuestion((prev) => ({ ...prev, location: value }))}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select state" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {locations.slice(1).map((location) => (
-                              <SelectItem key={location.value} value={location.value}>
-                                {location.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="tags">Tags (Optional)</Label>
-                      <Input
-                        id="tags"
-                        placeholder="e.g., rent-control, eviction, repairs (comma-separated)"
-                        value={newQuestion.tags}
-                        onChange={(e) => setNewQuestion((prev) => ({ ...prev, tags: e.target.value }))}
-                      />
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="urgent"
-                        checked={newQuestion.isUrgent}
-                        onChange={(e) => setNewQuestion((prev) => ({ ...prev, isUrgent: e.target.checked }))}
-                        className="rounded border-gray-300"
-                      />
-                      <Label htmlFor="urgent" className="text-sm">
-                        This is urgent (eviction notice, emergency repair, etc.)
-                      </Label>
-                    </div>
-
-                    <div className="flex justify-end space-x-3">
-                      <Button variant="outline" onClick={() => setIsAskingQuestion(false)}>
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleAskQuestion}
-                        disabled={!newQuestion.title || !newQuestion.content || !newQuestion.category}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        Post Question
-                      </Button>
-                    </div>
+          <div className="lg:col-span-3 space-y-6">
+            {/* Recent Discussions */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span>Recent Discussions</span>
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <span>Sort by:</span>
+                    <Button variant="ghost" size="sm">Latest</Button>
+                    <Button variant="ghost" size="sm">Popular</Button>
+                    <Button variant="ghost" size="sm">Unanswered</Button>
                   </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            {/* Browse Questions Tab */}
-            <TabsContent value="browse" className="space-y-6">
-              {/* Search and Filters */}
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex-1">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                        <Input
-                          placeholder="Search questions, tags, or keywords..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger className="w-[180px]">
-                          <Filter className="w-4 h-4 mr-2" />
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem key={category.value} value={category.value}>
-                              {category.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                        <SelectTrigger className="w-[140px]">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {locations.map((location) => (
-                            <SelectItem key={location.value} value={location.value}>
-                              {location.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={sortBy} onValueChange={setSortBy}>
-                        <SelectTrigger className="w-[140px]">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="recent">Most Recent</SelectItem>
-                          <SelectItem value="popular">Most Popular</SelectItem>
-                          <SelectItem value="unanswered">Unanswered</SelectItem>
-                          <SelectItem value="urgent">Urgent First</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Questions List */}
-              <div className="space-y-4">
-                {sortedQuestions.map((question) => (
-                  <Card key={question.id} className="hover:shadow-md transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentDiscussions.map((discussion) => (
+                    <div key={discussion.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                      <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-2">
-                            {question.isUrgent && (
-                              <Badge variant="destructive" className="bg-red-100 text-red-700">
-                                <AlertTriangle className="w-3 h-3 mr-1" />
-                                Urgent
+                            {discussion.isSticky && (
+                              <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+                                Sticky
                               </Badge>
                             )}
-                            {question.isResolved && (
-                              <Badge className="bg-green-100 text-green-700">
-                                <CheckCircle2 className="w-3 h-3 mr-1" />
-                                Resolved
+                            {discussion.isSolved && (
+                              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                                Solved
                               </Badge>
                             )}
                             <Badge variant="outline" className="text-xs">
-                              {categories.find((c) => c.value === question.category)?.label}
+                              {categories.find(c => c.id === discussion.category)?.title}
                             </Badge>
-                            {question.location !== "Not specified" && (
-                              <Badge variant="outline" className="text-xs">
-                                {question.location}
-                              </Badge>
-                            )}
                           </div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 cursor-pointer">
-                            {question.title}
+                          <h3 className="font-semibold text-lg mb-2 hover:text-blue-600 cursor-pointer">
+                            <Link href={`/community/discussion/${discussion.id}`}>
+                              {discussion.title}
+                            </Link>
                           </h3>
-                          <p className="text-gray-600 mb-3 line-clamp-2">{question.content}</p>
-                          <div className="flex flex-wrap gap-1 mb-3">
-                            {question.tags.map((tag, index) => (
-                              <Badge key={index} variant="secondary" className="text-xs bg-blue-50 text-blue-700">
-                                #{tag}
-                              </Badge>
-                            ))}
+                          <div className="flex items-center space-x-4 text-sm text-gray-600">
+                            <span className="flex items-center">
+                              <User className="w-4 h-4 mr-1" />
+                              {discussion.author}
+                            </span>
+                            <span className="flex items-center">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {discussion.timeAgo}
+                            </span>
+                            <span className="flex items-center">
+                              <Reply className="w-4 h-4 mr-1" />
+                              {discussion.replies} replies
+                            </span>
+                            <span className="flex items-center">
+                              <Eye className="w-4 h-4 mr-1" />
+                              {discussion.views} views
+                            </span>
+                            <span className="flex items-center">
+                              <ThumbsUp className="w-4 h-4 mr-1" />
+                              {discussion.likes} likes
+                            </span>
                           </div>
+                        </div>
+                        <div className="flex items-center space-x-2 ml-4">
+                          <Button variant="ghost" size="sm">
+                            <Bookmark className="w-4 h-4" />
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            <Share2 className="w-4 h-4" />
+                          </Button>
                         </div>
                       </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 text-center">
+                  <Button variant="outline">
+                    Load More Discussions
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                      <div className="flex items-center justify-between text-sm text-gray-500">
-                        <div className="flex items-center space-x-4">
-                          <span className="flex items-center space-x-1">
-                            <ThumbsUp className="w-4 h-4" />
-                            <span>{question.upvotes}</span>
-                          </span>
-                          <span className="flex items-center space-x-1">
-                            <MessageCircle className="w-4 h-4" />
-                            <span>{question.answers.length} answers</span>
-                          </span>
-                          <span className="flex items-center space-x-1">
-                            <Eye className="w-4 h-4" />
-                            <span>{question.views} views</span>
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span>by {question.author}</span>
-                          <span>•</span>
-                          <span>{getTimeAgo(question.timestamp)}</span>
-                        </div>
-                      </div>
-
-                      {/* Show best answer preview if available */}
-                      {question.answers.some((a) => a.isBestAnswer) && (
-                        <div className="mt-4 p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <CheckCircle2 className="w-4 h-4 text-green-600" />
-                            <span className="text-sm font-medium text-green-800">Best Answer</span>
-                            {question.answers.find((a) => a.isBestAnswer)?.isExpert && (
-                              <Badge className="bg-blue-100 text-blue-700 text-xs">Expert</Badge>
-                            )}
-                          </div>
-                          <p className="text-sm text-green-700 line-clamp-2">
-                            {question.answers.find((a) => a.isBestAnswer)?.content}
-                          </p>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-
-                {sortedQuestions.length === 0 && (
-                  <Card>
-                    <CardContent className="p-12 text-center">
-                      <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">No questions found</h3>
-                      <p className="text-gray-600 mb-4">
-                        Try adjusting your search or filters, or be the first to ask a question!
-                      </p>
-                      <Button
-                        onClick={() => setIsAskingQuestion(true)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        Ask a Question
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </TabsContent>
-
-            {/* Expert Answers Tab */}
-            <TabsContent value="experts" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <Users className="w-5 h-5 text-blue-600" />
-                    <span>Expert Contributors</span>
-                  </CardTitle>
-                  <p className="text-gray-600">
-                    Our community includes housing advocates, legal aid volunteers, and experienced renters who provide
-                    expert guidance.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {[
-                      { name: "Housing Advocate", answers: 45, rating: 4.9, specialty: "Rent Control & Tenant Rights" },
-                      { name: "Legal Aid Volunteer", answers: 32, rating: 4.8, specialty: "Eviction Defense" },
-                      { name: "Tenant Rights Expert", answers: 28, rating: 4.7, specialty: "Security Deposits" },
-                      { name: "Community Organizer", answers: 23, rating: 4.9, specialty: "Discrimination Issues" },
-                      { name: "Property Manager", answers: 19, rating: 4.6, specialty: "Maintenance & Repairs" },
-                      { name: "Experienced Renter", answers: 67, rating: 4.8, specialty: "General Advice" },
-                    ].map((expert, index) => (
-                      <Card key={index} className="p-4">
-                        <div className="flex items-center space-x-3 mb-3">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Users className="w-5 h-5 text-blue-600" />
-                          </div>
-                          <div>
-                            <h4 className="font-medium text-gray-900">{expert.name}</h4>
-                            <div className="flex items-center space-x-1">
-                              <Heart className="w-3 h-3 text-red-500 fill-current" />
-                              <span className="text-xs text-gray-600">{expert.rating} rating</span>
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Categories */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Categories</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {categories.map((category) => {
+                    const IconComponent = category.icon;
+                    return (
+                      <Link key={category.id} href={`/community/category/${category.id}`}>
+                        <div className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-8 h-8 bg-${category.color}-100 rounded-lg flex items-center justify-center`}>
+                              <IconComponent className={`w-4 h-4 text-${category.color}-600`} />
+                            </div>
+                            <div>
+                              <h4 className="font-medium">{category.title}</h4>
+                              <p className="text-sm text-gray-600">{category.description}</p>
                             </div>
                           </div>
+                          <div className="text-right text-sm text-gray-500">
+                            <div>{category.topics} topics</div>
+                            <div>{category.posts} posts</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{expert.specialty}</p>
-                        <p className="text-xs text-gray-500">{expert.answers} helpful answers</p>
-                      </Card>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
 
-              {/* Recent Expert Answers */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Expert Answers</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {questions
-                      .filter((q) => q.answers.some((a) => a.isExpert))
-                      .slice(0, 3)
-                      .map((question) => (
-                        <div key={question.id} className="border-l-4 border-blue-400 pl-4">
-                          <h4 className="font-medium text-gray-900 mb-2">{question.title}</h4>
-                          {question.answers
-                            .filter((a) => a.isExpert)
-                            .slice(0, 1)
-                            .map((answer) => (
-                              <div key={answer.id} className="bg-blue-50 p-3 rounded-lg">
-                                <div className="flex items-center space-x-2 mb-2">
-                                  <Badge className="bg-blue-100 text-blue-700 text-xs">Expert</Badge>
-                                  <span className="text-sm text-gray-600">{answer.author}</span>
-                                  <span className="text-xs text-gray-500">•</span>
-                                  <span className="text-xs text-gray-500">{getTimeAgo(answer.timestamp)}</span>
-                                </div>
-                                <p className="text-sm text-gray-700">{answer.content}</p>
-                              </div>
-                            ))}
+            {/* Top Contributors */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Top Contributors</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {topContributors.map((contributor, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
+                          {contributor.avatar}
                         </div>
-                      ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                        <div>
+                          <div className="font-medium">{contributor.name}</div>
+                          <div className="text-sm text-gray-600">{contributor.posts} posts</div>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {contributor.helpful} helpful
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
-          {/* Community Guidelines */}
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Heart className="w-5 h-5 text-red-500" />
-                <span>Community Guidelines</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-3">✅ Do:</h4>
-                  <ul className="space-y-2 text-sm text-gray-700">
-                    <li>• Be respectful and supportive</li>
-                    <li>• Provide specific details in your questions</li>
-                    <li>• Share your location (state) for better advice</li>
-                    <li>• Mark questions as resolved when helped</li>
-                    <li>• Upvote helpful answers</li>
-                  </ul>
+            {/* Community Stats */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Community Stats</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Total Members</span>
+                    <span className="font-semibold">2,847</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Total Discussions</span>
+                    <span className="font-semibold">689</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Total Posts</span>
+                    <span className="font-semibold">2,015</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Questions Answered</span>
+                    <span className="font-semibold">1,234</span>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-3">❌ Don&apos;t:</h4>
-                  <ul className="space-y-2 text-sm text-gray-700">
-                    <li>• Share personal information (addresses, names)</li>
-                    <li>• Give legal advice unless you&apos;re qualified</li>
-                    <li>• Post duplicate questions</li>
-                    <li>• Use offensive or discriminatory language</li>
-                    <li>• Spam or self-promote</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                <p className="text-sm text-yellow-800">
-                  <strong>Disclaimer:</strong> This community provides general information and support. For specific
-                  legal advice, consult with a qualified attorney or legal aid organization in your area.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Community Guidelines */}
+            <Card className="border-blue-200 bg-blue-50">
+              <CardHeader>
+                <CardTitle className="text-blue-800">Community Guidelines</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-blue-800">
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                    Be respectful and helpful to others
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                    Share accurate information and experiences
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                    No personal attacks or harassment
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                    Keep discussions on-topic
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }

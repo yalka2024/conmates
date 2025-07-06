@@ -1,12 +1,16 @@
 import { streamText } from "ai"
 import { openai } from "@ai-sdk/openai"
 import type { NextRequest } from "next/server"
+import { logError, logInfo } from '@/lib/auto-debug'
 
 export async function POST(req: NextRequest) {
   try {
+    logInfo('api-chat', 'Chat API called');
+    
     const { messages, category = "general" } = await req.json()
 
     if (!messages || !Array.isArray(messages)) {
+      logError(new Error('Invalid messages format'), { component: 'api-chat' });
       return new Response("Invalid messages format", { status: 400 })
     }
 
@@ -41,6 +45,18 @@ export async function POST(req: NextRequest) {
 
     const systemPrompt = systemPrompts[category as keyof typeof systemPrompts] || systemPrompts.general
 
+    logInfo('api-chat', 'Calling OpenAI API', { category, messageCount: messages.length });
+
+    // Ensure OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY && process.env.OPENAI_SECRET_KEY) {
+      process.env.OPENAI_API_KEY = process.env.OPENAI_SECRET_KEY;
+      logInfo('api-chat', 'Set OPENAI_API_KEY from OPENAI_SECRET_KEY');
+    }
+
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('OpenAI API key is missing. Please set OPENAI_API_KEY or OPENAI_SECRET_KEY environment variable.');
+    }
+
     const result = await streamText({
       model: openai("gpt-4o"),
       system: systemPrompt,
@@ -49,8 +65,11 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
     })
 
+    logInfo('api-chat', 'OpenAI API call successful');
     return result.toDataStreamResponse()
   } catch (error) {
+    // Use auto-debug system to handle and potentially fix the error
+    await logError(error as Error, { component: 'api-chat' });
     console.error("Chat API error:", error)
     return new Response("Internal Server Error", { status: 500 })
   }

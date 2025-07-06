@@ -16,6 +16,11 @@ interface ChatContext {
 
 export async function generateChatSuggestions(context: ChatContext) {
   try {
+    // Ensure OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY && process.env.OPENAI_SECRET_KEY) {
+      process.env.OPENAI_API_KEY = process.env.OPENAI_SECRET_KEY;
+    }
+
     const { text } = await generateText({
       model: openai("gpt-4o"),
       system: `You are an AI assistant that generates helpful follow-up questions and suggestions for a lease and tenant rights chat system. 
@@ -79,6 +84,11 @@ function getDefaultSuggestions(category: string): string[] {
 
 export async function analyzeLeaseClauses(leaseText: string) {
   try {
+    // Ensure OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY && process.env.OPENAI_SECRET_KEY) {
+      process.env.OPENAI_API_KEY = process.env.OPENAI_SECRET_KEY;
+    }
+
     const { text } = await generateText({
       model: openai("gpt-4o"),
       system: `You are a lease analysis expert. Analyze the provided lease text and identify:

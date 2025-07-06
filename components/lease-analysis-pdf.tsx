@@ -1,25 +1,12 @@
 import type React from "react"
-import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer"
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
 
-// Register fonts for better typography
-Font.register({
-  family: "Inter",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" },
-    {
-      src: "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2",
-      fontWeight: "bold",
-    },
-  ],
-})
-
-// Create styles
+// Create styles without external font dependencies
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#ffffff",
     padding: 40,
-    fontFamily: "Inter",
     fontSize: 11,
     lineHeight: 1.5,
   },
@@ -212,7 +199,7 @@ const styles = StyleSheet.create({
     right: 0,
     textAlign: "center",
     color: "#9CA3AF",
-  },
+  }
 })
 
 interface LeaseAnalysisPDFProps {
@@ -268,7 +255,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
           <Text style={styles.sectionTitle}>Executive Summary</Text>
           <Text style={{ fontSize: 11, color: "#4B5563", marginBottom: 10 }}>
             This report provides a comprehensive analysis of your lease agreement, breaking down complex legal language
-            into plain English. We&apos;ve identified key terms, potential concerns, and actionable recommendations to help
+            into plain English. We have identified key terms, potential concerns, and actionable recommendations to help
             you understand your rights and responsibilities.
           </Text>
           <Text style={{ fontSize: 11, color: "#4B5563" }}>
@@ -291,13 +278,13 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
                 </Text>
               </View>
               <View style={styles.originalText}>
-                <Text>Original Text: &quot;{clause.originalText}&quot;</Text>
+                <Text>Original Text: "{clause.originalText}"</Text>
               </View>
               <View style={styles.explanation}>
                 <Text>Plain English: {clause.explanation}</Text>
               </View>
               <View style={styles.tipsContainer}>
-                <Text style={styles.tipsTitle}>💡 Pro Tips:</Text>
+                <Text style={styles.tipsTitle}>Pro Tips:</Text>
                 {clause.tips.map((tip, tipIndex) => (
                   <Text key={tipIndex} style={styles.tip}>
                     • {tip}
@@ -329,13 +316,13 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
                 </Text>
               </View>
               <View style={styles.originalText}>
-                <Text>Original Text: &quot;{clause.originalText}&quot;</Text>
+                <Text>Original Text: "{clause.originalText}"</Text>
               </View>
               <View style={styles.explanation}>
                 <Text>Plain English: {clause.explanation}</Text>
               </View>
               <View style={styles.tipsContainer}>
-                <Text style={styles.tipsTitle}>💡 Pro Tips:</Text>
+                <Text style={styles.tipsTitle}>Pro Tips:</Text>
                 {clause.tips.map((tip, tipIndex) => (
                   <Text key={tipIndex} style={styles.tip}>
                     • {tip}
@@ -356,9 +343,9 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
       {/* Page 3: Red Flags */}
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🚩 Potential Red Flags</Text>
+          <Text style={styles.sectionTitle}>Potential Red Flags</Text>
           <Text style={{ fontSize: 11, color: "#4B5563", marginBottom: 15 }}>
-            We&apos;ve identified several clauses that may work against your interests. Here&apos;s what to watch out for:
+            We have identified several clauses that may work against your interests. Here is what to watch out for:
           </Text>
           {redFlags.map((flag, index) => (
             <View key={index} style={styles.redFlagContainer}>
@@ -391,7 +378,7 @@ const LeaseAnalysisPDF: React.FC<LeaseAnalysisPDFProps> = ({ clauses, redFlags, 
       {/* Page 4: Actionable Tips */}
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📋 Your Action Plan</Text>
+          <Text style={styles.sectionTitle}>Your Action Plan</Text>
           <Text style={{ fontSize: 11, color: "#4B5563", marginBottom: 15 }}>
             Follow these practical steps to protect yourself and make the most of your lease:
           </Text>

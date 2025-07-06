@@ -1,46 +1,58 @@
-import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-06-30.basil',
-})
+  apiVersion: "2025-06-30.basil",
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, name } = await request.json()
+    const { tier, analysisId } = await request.json();
 
-    // Create Checkout Session
+    // Define pricing based on tier
+    let priceId: string;
+    let amount: number;
+    let description: string;
+
+    if (tier === "premium") {
+      priceId = "price_premium_analysis"; // You'll need to create this in Stripe
+      amount = 1999; // $19.99 in cents
+      description = "Premium Lease Analysis - Comprehensive legal review with risk assessment";
+    } else {
+      return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
+    }
+
+    // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
-              name: 'Conmates - Lease Analysis',
-              description: 'AI-powered lease document analysis and breakdown',
-              images: ['https://conmates.com/logo.png'], // Use the real logo
+              name: "Premium Lease Analysis",
+              description: description,
             },
-            unit_amount: 999, // $9.99 in cents
+            unit_amount: amount,
           },
           quantity: 1,
         },
       ],
-      mode: 'payment',
-      success_url: `${request.headers.get('origin')}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.get('origin')}/payment?canceled=true`,
-      customer_email: email,
+      mode: "payment",
+      success_url: `${request.headers.get("origin")}/summary?session_id={CHECKOUT_SESSION_ID}&analysis_id=${analysisId}`,
+      cancel_url: `${request.headers.get("origin")}/upload`,
       metadata: {
-        customer_name: name,
+        tier: tier,
+        analysisId: analysisId,
       },
-    })
+    });
 
-    return NextResponse.json({ sessionId: session.id })
+    return NextResponse.json({ sessionId: session.id, url: session.url });
   } catch (error) {
-    console.error('Error creating checkout session:', error)
+    console.error("Error creating checkout session:", error);
     return NextResponse.json(
-      { error: 'Error creating checkout session' },
+      { error: "Failed to create checkout session" },
       { status: 500 }
-    )
+    );
   }
-} 
+}
