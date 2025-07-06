@@ -67,6 +67,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
     }
     console.log('OpenAI API key found');
+    
+    // Set the API key for the AI library
+    process.env.OPENAI_API_KEY = apiKey;
 
     console.log('Extracting text from PDF...');
     console.log('Calling OpenAI API for lease analysis...');
@@ -116,8 +119,7 @@ Lease content: ${fileContent}`;
     const result = await generateText({
       model: openai('gpt-3.5-turbo'),
       prompt: prompt,
-      maxTokens: maxTokens,
-      apiKey: apiKey
+      maxTokens: maxTokens
     });
 
     console.log('OpenAI API response received');

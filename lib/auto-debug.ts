@@ -8,7 +8,7 @@ interface DebugLog {
   level: 'info' | 'warning' | 'error' | 'critical';
   component: string;
   message: string;
-  details?: any;
+  details?: unknown;
   stack?: string;
   autoFixed?: boolean;
 }
@@ -24,8 +24,8 @@ interface HealthCheck {
 interface AutoFixAction {
   id: string;
   description: string;
-  condition: (context: any) => boolean;
-  action: (context: any) => Promise<boolean>;
+  condition: (context: Record<string, unknown>) => boolean;
+  action: (context: Record<string, unknown>) => Promise<boolean>;
   priority: 'low' | 'medium' | 'high' | 'critical';
 }
 
@@ -69,8 +69,8 @@ class AutoDebugSystem {
       id: 'fix-openai-api-key',
       description: 'Fix OpenAI API key configuration issues',
       condition: (context) => {
-        return context.error?.message?.includes('OpenAI API key') || 
-               context.error?.message?.includes('AI_LoadAPIKeyError');
+        const err = (typeof context === 'object' && context && '_error' in context && typeof context._error === 'object') ? context._error as { message?: string } : undefined;
+        return err?.message?.includes('OpenAI API key') || err?.message?.includes('AI_LoadAPIKeyError');
       },
       action: async (context) => {
         try {
@@ -94,8 +94,8 @@ class AutoDebugSystem {
       id: 'fix-upload-directory',
       description: 'Create missing upload directory',
       condition: (context) => {
-        return context.error?.message?.includes('ENOENT') || 
-               context.error?.message?.includes('permission');
+        const err = (typeof context === 'object' && context && '_error' in context && typeof context._error === 'object') ? context._error as { message?: string } : undefined;
+        return err?.message?.includes('ENOENT') || err?.message?.includes('permission');
       },
       action: async (context) => {
         try {
@@ -119,9 +119,8 @@ class AutoDebugSystem {
       id: 'fix-cache-issues',
       description: 'Clear corrupted cache files',
       condition: (context) => {
-        return context.error?.message?.includes('cache') || 
-               context.error?.message?.includes('compilation') ||
-               context.component === 'nextjs';
+        const err = (typeof context === 'object' && context && '_error' in context && typeof context._error === 'object') ? context._error as { message?: string } : undefined;
+        return err?.message?.includes('cache') || err?.message?.includes('compilation') || context.component === 'nextjs';
       },
       action: async (context) => {
         try {
@@ -141,9 +140,8 @@ class AutoDebugSystem {
       id: 'fix-memory-issues',
       description: 'Handle memory-related issues',
       condition: (context) => {
-        return context.error?.message?.includes('memory') || 
-               context.error?.message?.includes('heap') ||
-               process.memoryUsage().heapUsed > 500 * 1024 * 1024; // 500MB
+        const err = (typeof context === 'object' && context && '_error' in context && typeof context._error === 'object') ? context._error as { message?: string } : undefined;
+        return err?.message?.includes('memory') || err?.message?.includes('heap') || process.memoryUsage().heapUsed > 500 * 1024 * 1024; // 500MB
       },
       action: async (context) => {
         try {
@@ -167,9 +165,9 @@ class AutoDebugSystem {
       id: 'fix-file-input-double-trigger',
       description: 'Prevent file input double triggering',
       condition: (context) => {
-        return context.component === 'file-input' && 
-               context.error?.message?.includes('double') ||
-               context.details?.doubleTrigger;
+        const err = (typeof context === 'object' && context && '_error' in context && typeof context._error === 'object') ? context._error as { message?: string } : undefined;
+        const details = (typeof context === 'object' && context && 'details' in context && typeof context.details === 'object') ? context.details as { doubleTrigger?: boolean } : undefined;
+        return context.component === 'file-input' && err?.message?.includes('double') || details?.doubleTrigger;
       },
       action: async (context) => {
         try {
@@ -185,7 +183,7 @@ class AutoDebugSystem {
     });
   }
 
-  public log(level: DebugLog['level'], component: string, message: string, details?: any) {
+  public log(level: DebugLog['level'], component: string, message: string, details?: unknown) {
     const logEntry: DebugLog = {
       timestamp: new Date().toISOString(),
       level,
@@ -214,8 +212,8 @@ class AutoDebugSystem {
     this.saveLogs();
   }
 
-  public async handleError(error: Error, context: any = {}) {
-    this.log('error', context.component || 'unknown', error.message, {
+  public async handleError(error: Error, context: Record<string, unknown> = {}) {
+    this.log('error', (context.component as string) || 'unknown', error.message, {
       ...context,
       stack: error.stack
     });
@@ -390,8 +388,8 @@ class AutoDebugSystem {
 export const autoDebug = new AutoDebugSystem();
 
 // Utility functions for easy use
-export const logError = (error: Error, context?: any) => autoDebug.handleError(error, context);
-export const logInfo = (component: string, message: string, details?: any) => autoDebug.log('info', component, message, details);
-export const logWarning = (component: string, message: string, details?: any) => autoDebug.log('warning', component, message, details);
+export const logError = (error: Error, context?: Record<string, unknown>) => autoDebug.handleError(error, context);
+export const logInfo = (component: string, message: string, details?: unknown) => autoDebug.log('info', component, message, details);
+export const logWarning = (component: string, message: string, details?: unknown) => autoDebug.log('warning', component, message, details);
 export const getSystemHealth = () => autoDebug.getSystemHealth();
 export const getRecentLogs = (limit?: number) => autoDebug.getRecentLogs(limit); 

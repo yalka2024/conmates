@@ -13,6 +13,7 @@ import {
   Scale
 } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 
 interface MobileCourseCardProps {
   course: {
@@ -26,7 +27,7 @@ interface MobileCourseCardProps {
     rating: number;
     level: string;
     instructor: string;
-    icon: any;
+    icon: React.ElementType;
     color: string;
   };
 }
