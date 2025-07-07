@@ -113,16 +113,21 @@ Please provide personalized feedback and study recommendations.`;
       nextSteps: generateNextSteps(score, lessonId),
     });
 
-  } catch (error) {
-    console.error('Quiz Assessment API Error:', error);
+  } catch (error: unknown) {
+    console.error("Error processing quiz assessment:", error);
     return NextResponse.json(
-      { error: 'Failed to process quiz assessment. Please try again.' },
+      { error: "Failed to process assessment" },
       { status: 500 }
     );
   }
 }
 
-function generateRecommendations(score: number, feedback: any[]) {
+function generateRecommendations(score: number, feedback: Array<{
+  questionId: number;
+  correct: boolean;
+  explanation: string;
+  message: string;
+}>) {
   const recommendations = [];
   
   if (score < 70) {

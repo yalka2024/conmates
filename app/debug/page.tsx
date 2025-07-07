@@ -15,8 +15,7 @@ import {
   FileText, 
   Settings,
   Zap,
-  Shield,
-  Database
+  Shield
 } from "lucide-react"
 
 interface HealthCheck {
@@ -32,7 +31,7 @@ interface DebugLog {
   level: 'info' | 'warning' | 'error' | 'critical';
   component: string;
   message: string;
-  details?: any;
+  details?: unknown;
   stack?: string;
   autoFixed?: boolean;
 }

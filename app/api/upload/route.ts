@@ -129,8 +129,8 @@ Lease content: ${fileContent}`;
     let analysisResult;
     try {
       analysisResult = JSON.parse(result.text);
-    } catch (error) {
-      console.error('Failed to parse OpenAI response:', error);
+    } catch (error: unknown) {
+      console.error("Error parsing OpenAI response:", error);
       // Return a fallback analysis
       analysisResult = {
         rent: '$1,200',
@@ -206,10 +206,10 @@ Lease content: ${fileContent}`;
     console.log('✅ OpenAI analysis completed successfully');
     return NextResponse.json(finalResult);
 
-  } catch (error) {
-    console.error('Upload error:', error);
+  } catch (error: unknown) {
+    console.error("Error processing upload:", error);
     return NextResponse.json(
-      { error: 'Failed to process lease analysis' },
+      { error: "Failed to process upload" },
       { status: 500 }
     );
   }

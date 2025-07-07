@@ -5,14 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Play, 
   CheckCircle, 
   AlertTriangle, 
   Lightbulb,
   ArrowRight,
   RefreshCw,
   BookOpen,
-  Users
+  Clock
 } from 'lucide-react';
 
 interface ScenarioOption {
@@ -45,7 +44,6 @@ interface InteractiveScenarioProps {
 export default function InteractiveScenario({ scenario, onComplete, onNext }: InteractiveScenarioProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showOutcome, setShowOutcome] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<string[]>([]);
 
@@ -74,7 +72,6 @@ export default function InteractiveScenario({ scenario, onComplete, onNext }: In
     setShowOutcome(false);
     setScore(0);
     setFeedback([]);
-    setCurrentStep(0);
   };
 
   const getDifficultyColor = (difficulty: string) => {

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Shield, CreditCard, Loader2, Star, Zap, Crown, Users, ArrowRight } from "lucide-react"
+import { CheckCircle, Shield, CreditCard, Loader2, Star, Crown, Users, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
@@ -69,7 +69,7 @@ export default function PaymentPage() {
     name: "",
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [paymentAvailable, setPaymentAvailable] = useState(true)
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -106,7 +106,27 @@ export default function PaymentPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session');
+        const errorData = await response.json().catch(() => ({}));
+        
+        // Handle specific Stripe configuration errors
+        if (response.status === 503 && errorData.code) {
+          setPaymentAvailable(false);
+          switch (errorData.code) {
+            case 'STRIPE_NOT_CONFIGURED':
+            case 'STRIPE_INITIALIZATION_FAILED':
+            case 'STRIPE_CONFIGURATION_ERROR':
+              toast({
+                title: "Payment Processing Unavailable",
+                description: "Payment processing is currently unavailable. Please contact support for assistance.",
+                variant: "destructive",
+              });
+              return;
+            default:
+              break;
+          }
+        }
+        
+        throw new Error(errorData.error || 'Failed to create checkout session');
       }
 
       const { url } = await response.json();
@@ -115,7 +135,7 @@ export default function PaymentPage() {
       console.error('Error creating checkout session:', error);
       toast({
         title: "Error",
-        description: "Failed to create checkout session. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to create checkout session. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -138,6 +158,21 @@ export default function PaymentPage() {
               Choose the plan that works best for you
             </p>
           </div>
+
+          {/* Payment Processing Status */}
+          {!paymentAvailable && (
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div className="flex items-center space-x-3">
+                <Shield className="w-5 h-5 text-yellow-600" />
+                <div>
+                  <h4 className="font-medium text-yellow-900">Payment Processing Temporarily Unavailable</h4>
+                  <p className="text-sm text-yellow-800 mt-1">
+                    We're currently experiencing issues with our payment system. Please contact support for assistance or try again later.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -272,17 +307,11 @@ export default function PaymentPage() {
                   />
                 </div>
 
-                {error && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-red-700 text-sm">{error}</p>
-                  </div>
-                )}
-
                 <Button
                   type="button"
                   onClick={() => handlePurchase(selectedPlan)}
-                  disabled={isLoading || selectedPlan === "basic-analysis"}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3"
+                  disabled={isLoading || selectedPlan === "basic-analysis" || !paymentAvailable}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <div className="flex items-center space-x-2">
@@ -291,6 +320,11 @@ export default function PaymentPage() {
                     </div>
                   ) : selectedPlan === "basic-analysis" ? (
                     "Free - No Payment Required"
+                  ) : !paymentAvailable ? (
+                    <div className="flex items-center space-x-2">
+                      <Shield className="w-5 h-5" />
+                      <span>Payment Unavailable</span>
+                    </div>
                   ) : (
                     <div className="flex items-center space-x-2">
                       <CreditCard className="w-5 h-5" />

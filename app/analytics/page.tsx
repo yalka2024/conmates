@@ -3,18 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  BarChart3, 
   Users, 
   FileText, 
   DollarSign, 
   TrendingUp, 
-  Activity,
-  Calendar,
-  MapPin,
-  Clock,
-  CheckCircle,
-  AlertTriangle,
-  Download
+  Activity, 
+  MapPin, 
+  Download 
 } from "lucide-react";
 
 export default function AnalyticsPage() {
