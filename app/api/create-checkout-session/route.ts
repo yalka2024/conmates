@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+
+if (!stripeSecretKey) {
+  console.warn('STRIPE_SECRET_KEY not found in environment variables')
+}
+
+const stripe = stripeSecretKey ? new Stripe(stripeSecretKey, {
   apiVersion: '2025-06-30.basil',
-})
+}) : null
 
 export async function POST(request: NextRequest) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not configured. Please contact support.' },
+        { status: 503 }
+      )
+    }
+
     const { email, name } = await request.json()
 
     // Create Checkout Session
@@ -43,4 +56,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-} 
+}
