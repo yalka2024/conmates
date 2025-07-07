@@ -64,10 +64,15 @@ export default function SummaryPage() {
 
   useEffect(() => {
     const storedAnalysis = localStorage.getItem("leaseAnalysis")
-    if (storedAnalysis) {
-      const parsedAnalysis = JSON.parse(storedAnalysis)
-      setAnalysis(parsedAnalysis)
-      setIsPremium(parsedAnalysis.analysisType === 'premium')
+    if (storedAnalysis && storedAnalysis !== "undefined") {
+      try {
+        const parsedAnalysis = JSON.parse(storedAnalysis)
+        setAnalysis(parsedAnalysis)
+        setIsPremium(parsedAnalysis.analysisType === 'premium')
+      } catch (e) {
+        setAnalysis(null)
+        setIsPremium(false)
+      }
     }
   }, [])
 
