@@ -90,7 +90,7 @@ export default function UploadPage() {
           const result = await response.json()
           setTimeout(() => {
             setUploadState("success")
-            localStorage.setItem("leaseAnalysis", JSON.stringify(result.analysis))
+            localStorage.setItem("leaseAnalysis", JSON.stringify(result))
           }, 500)
         } catch {
           clearInterval(progressInterval)
