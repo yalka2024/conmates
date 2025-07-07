@@ -142,14 +142,6 @@ export default function RootLayout({
                           <GraduationCap className="w-4 h-4" />
                           <span>Courses</span>
                         </Link>
-                        <Link href="/monetization-strategy" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors">
-                          <DollarSign className="w-4 h-4" />
-                          <span>Revenue</span>
-                        </Link>
-                        <Link href="/launch-strategy" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors">
-                          <Zap className="w-4 h-4" />
-                          <span>Launch</span>
-                        </Link>
                         <Link href="/support" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors">
                           <HelpCircle className="w-4 h-4" />
                           <span>Support</span>

@@ -31,26 +31,24 @@ export default function HomePage() {
             <div className="text-center">
               <Badge variant="secondary" className="mb-4">
                 <Zap className="w-4 h-4 mr-2" />
-                AI-Powered Lease Analysis
+                {t("home.hero.badge")}
               </Badge>
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Understand Your Lease with
-                <span className="text-blue-600"> AI Intelligence</span>
+                {t("home.hero.title")}<span className="text-blue-600"> {t("home.hero.titleAccent")}</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Upload your lease agreement and get instant AI-powered analysis, legal insights, 
-                and personalized recommendations. Know your rights, identify risks, and make informed decisions.
+                {t("home.hero.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
                   <Link href="/upload">
-                    Analyze Your Lease
+                    {t("home.hero.cta")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
                   <Link href="/resources">
-                    View Resources
+                    {t("home.hero.resources")}
                   </Link>
                 </Button>
               </div>
@@ -63,11 +61,10 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Everything You Need to Understand Your Lease
+                {t("home.features.title")}
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Our AI-powered platform provides comprehensive lease analysis and legal resources 
-                to help you make informed decisions about your rental agreement.
+                {t("home.features.subtitle")}
               </p>
             </div>
 
@@ -77,25 +74,24 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                     <FileText className="w-6 h-6 text-blue-600" />
                   </div>
-                  <CardTitle>AI Lease Analysis</CardTitle>
+                  <CardTitle>{t("home.features.analysis.title")}</CardTitle>
                   <CardDescription>
-                    Upload your lease PDF and get instant AI-powered analysis with key terms, 
-                    risks, and recommendations.
+                    {t("home.features.analysis.desc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Basic analysis included
+                      {t("home.features.analysis.basic")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Premium detailed analysis
+                      {t("home.features.analysis.premium")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Risk assessment
+                      {t("home.features.analysis.risk")}
                     </li>
                   </ul>
                 </CardContent>
@@ -106,25 +102,24 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                     <Shield className="w-6 h-6 text-green-600" />
                   </div>
-                  <CardTitle>Legal Resources</CardTitle>
+                  <CardTitle>{t("home.features.resources.title")}</CardTitle>
                   <CardDescription>
-                    Access comprehensive tenant rights information and legal resources 
-                    specific to your state.
+                    {t("home.features.resources.desc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      State-specific rights
+                      {t("home.features.resources.state")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Legal aid resources
+                      {t("home.features.resources.legalAid")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Educational materials
+                      {t("home.features.resources.education")}
                     </li>
                   </ul>
                 </CardContent>
@@ -135,25 +130,24 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                     <Users className="w-6 h-6 text-purple-600" />
                   </div>
-                  <CardTitle>Legal Consultation</CardTitle>
+                  <CardTitle>{t("home.features.consult.title")}</CardTitle>
                   <CardDescription>
-                    Get AI-powered legal analysis and connect with state-specific 
-                    legal resources and organizations.
+                    {t("home.features.consult.desc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      AI legal analysis
+                      {t("home.features.consult.analysis")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Legal referrals
+                      {t("home.features.consult.referrals")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Document review
+                      {t("home.features.consult.review")}
                     </li>
                   </ul>
                 </CardContent>
@@ -167,37 +161,37 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Simple, Transparent Pricing
+                {t("home.pricing.title")}
               </h2>
               <p className="text-xl text-gray-600">
-                Choose the analysis level that fits your needs
+                {t("home.pricing.subtitle")}
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card className="border-2 border-gray-200">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-2xl">Basic Analysis</CardTitle>
-                  <div className="text-3xl font-bold text-blue-600">Free</div>
-                  <CardDescription>Perfect for quick lease overview</CardDescription>
+                  <CardTitle className="text-2xl">{t("home.pricing.basic.title")}</CardTitle>
+                  <div className="text-3xl font-bold text-blue-600">{t("home.pricing.basic.price")}</div>
+                  <CardDescription>{t("home.pricing.basic.desc")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3 text-sm">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Key terms extraction
+                      {t("home.pricing.basic.terms")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Basic recommendations
+                      {t("home.pricing.basic.recommendations")}
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      Standard processing
+                      {t("home.pricing.basic.processing")}
                     </li>
                   </ul>
                   <Button asChild className="w-full mt-6" variant="outline">
-                    <Link href="/upload">Get Started</Link>
+                    <Link href="/upload">{t("home.pricing.basic.cta")}</Link>
                   </Button>
                 </CardContent>
               </Card>
