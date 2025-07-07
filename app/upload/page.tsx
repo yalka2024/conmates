@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useRef, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Upload, FileText, ImageIcon, AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react"
@@ -24,10 +24,10 @@ export default function UploadPage() {
   const [uploadProgress, setUploadProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const acceptedTypes = ["application/pdf", "image/jpeg", "image/png", "image/jpg"]
-  const maxFileSize = 10 * 1024 * 1024 // 10MB
+  const acceptedTypes = useMemo(() => ["application/pdf", "image/jpeg", "image/png", "image/jpg"], [])
+  const maxFileSize = useMemo(() => 10 * 1024 * 1024, []) // 10MB
 
-  const validateFile = (file: File): FileError | null => {
+  const validateFile = useCallback((file: File): FileError | null => {
     if (!acceptedTypes.includes(file.type)) {
       return {
         type: "format",
@@ -43,9 +43,9 @@ export default function UploadPage() {
     }
 
     return null
-  }
+  }, [acceptedTypes, maxFileSize, t])
 
-  const uploadFile = async (file: File) => {
+  const uploadFile = useCallback(async (file: File) => {
     setUploadState("uploading")
     setUploadProgress(0)
 
@@ -89,7 +89,7 @@ export default function UploadPage() {
       })
       setUploadState("error")
     }
-  }
+  }, [t])
 
   const handleFileSelect = useCallback((file: File) => {
     const fileError = validateFile(file)
